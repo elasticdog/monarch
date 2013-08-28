@@ -1,0 +1,13 @@
+---
+# This playbook configures the Postfix MTA (Mail Transfer Agent).
+
+- name: install the postfix package
+  pacman: name=postfix state=installed
+
+- name: create the postfix postgresql database
+  sudo: yes
+  sudo_user: postgres
+  postgresql_db: name=postfix state=present
+
+#- name: start the postfix daemon and enable on boot
+#  service: name=postfix state=started enabled=true

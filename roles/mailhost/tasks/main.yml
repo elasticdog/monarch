@@ -1,0 +1,5 @@
+---
+# This playbook contains plays that will be run on mailhost nodes.
+
+- include: postgresql.yml tags=postgresql
+- include: postfix.yml tags=postfix

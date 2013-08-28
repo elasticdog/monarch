@@ -1,0 +1,19 @@
+---
+# This playbook configures PostgreSQL database hosting.
+
+- name: install the postgresql package and ansible module dependencies
+  pacman: name={{ item }} state=installed
+  with_items:
+    - postgresql
+    - python2-psycopg2
+
+- name: fix permissions on the home directory for the postgres user
+  file: path=/var/lib/postgres state=directory
+    owner=postgres group=postgres mode=0700
+
+- name: initialize the postgresql database cluster
+  command: /usr/bin/su - postgres -c "/usr/bin/initdb --locale en_US.UTF-8 --pgdata '/var/lib/postgres/data'"
+    creates=/var/lib/postgres/data/PG_VERSION
+
+- name: start the postgresql daemon and enable on boot
+  service: name=postgresql state=started enabled=true

@@ -1,0 +1,14 @@
+---
+# This playbook deploys the whole application stack in this site.
+
+- name: apply common configuration to all nodes
+  hosts: all
+  sudo: yes
+  roles:
+    - common
+
+- name: configure mail stack on mailhost nodes
+  hosts: all
+  sudo: yes
+  roles:
+    - mailhost

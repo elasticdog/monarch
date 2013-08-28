@@ -1,0 +1,11 @@
+---
+# This playbook contains the default variables common to all nodes.
+
+ntp_servers:
+  - "0.us.pool.ntp.org"
+  - "1.us.pool.ntp.org"
+  - "2.us.pool.ntp.org"
+  - "3.us.pool.ntp.org"
+
+sshd_listenaddress:
+  - "{{ ansible_eth1['ipv4']['address'] }}"

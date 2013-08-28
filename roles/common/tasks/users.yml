@@ -1,0 +1,20 @@
+---
+# This playbook handles user creation and access rights.
+
+- name: create user aaron
+  user: name=aaron comment="Aaron Bull Schaefer"
+    uid=1111 group=users
+  tags: bootstrap
+
+- name: add ssh pubkey to authorized_keys for user aaron
+  authorized_key: user=aaron key="{{ item }}"
+  with_file:
+    - ssh/aaron/halcyon.pub
+    - ssh/aaron/holystone.pub
+  tags: bootstrap
+
+- name: grant full sudo rights to user aaron
+  copy: src=sudoers_aaron dest=/etc/sudoers.d/10_aaron
+    owner=root group=root mode=0440
+    validate='visudo -cf %s'
+  tags: bootstrap
